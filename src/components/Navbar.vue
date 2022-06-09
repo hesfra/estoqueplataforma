@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name:"Navbar",
+    name:'navbar',
     props:["logo","alt"],
     data(){
         return{

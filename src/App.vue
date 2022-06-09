@@ -1,5 +1,5 @@
 <script>
-import Navbar from './components/Navbar.vue'
+import navbar from "./components/Navbar.vue";
 import { RouterLink, RouterView } from 'vue-router';
 
 
@@ -11,7 +11,7 @@ data(){
     }
 },
 components: {
-    Navbar,
+    navbar,
     RouterView
 },
 }
@@ -19,8 +19,9 @@ components: {
 
 <template>
 <div>
-  <Navbar />
+  <navbar />
   <RouterView />
+  
 </div>
 </template>
 

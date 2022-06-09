@@ -1,5 +1,5 @@
 <template>
-   <navbar />
+   <Navbar />
     <div class="mainContainer">
       <h1>Início</h1>
       <div class="imagens">
@@ -10,12 +10,12 @@
    </div>
 </template>
 <script>
-import navbar from "../components/Navbar.vue";
+import Navbar from "../components/Navbar.vue";
 export default {
    name: "Home",
 
    components: {
-      navbar
+      Navbar
    }
 }
 </script>

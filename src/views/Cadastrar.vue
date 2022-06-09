@@ -1,5 +1,5 @@
 <template>
-    <navbar />
+ 
     <div class="mainContainer">
         <h3>Cadastrar</h3>
         <h1>Escreva os detalhes dos equipamentos</h1>
@@ -44,22 +44,31 @@
 
                 <input type="submit" value="Cadastrar" id="cadastrar">
             </div>
+            
         </div>
+        
     </div>
+
 </template>
 
 <script>
+
+import modal from "../modal/modalGetEquip.vue";
+
 export default {
     name: "cadastrar",
+    components:{
+        modal,
+    },
     data() {
         return {
-            logo: "./src/assets/logo.svg",
-            alt: "logo",
+           // logo: "./src/assets/logo.svg",
+            //alt: "logo",
             serialNumber: null,
             nomeEquipamento: null,
             status: null,
             categoria: null,
-
+            showModal: true,
         }
     },
     methods: {
@@ -72,23 +81,26 @@ export default {
             this.origem = res.origem;
         },
         async createEquip(){
-            const req = await fetch(`url`, {
+            const req = await fetch(`https://estoque-plataforma.herokuapp.com/`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    serialNumber: this.serialNumber,
-                    nomeEquipamento: this.nomeEquipamento,
+                    
+                    serial_number: this.serialNumber,
+                    device_name: this.nomeEquipamento,
                     status: this.status,
                     categoria: this.categoria,
                     origem: this.origem,
-                    detalhes: this.detalhes
+                    detalhes: this.detalhes,
                 })
-            })
-            const res = await req.json()
-        }
-    },
+                })
+                const res = await req.json();
+            }
+            
+        },
     mounted() {
         this.getSelection();
     }
