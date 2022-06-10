@@ -57,11 +57,11 @@ export default {
         },
       });
       const res = await req.json()
-      
+      sessionStorage.setItem('equipamentos', JSON.stringify(res));
       this.getAllEquips();
     }
   }, mounted() {
-    this.getAllEquips();
+    
   }
 }
 </script>
@@ -76,10 +76,11 @@ export default {
 
 }
 #equipTable {
-  max-width: 1200px;
+  max-width: 65%;
+  min-width: 750px;
   margin: 0 auto;
   margin-top:170px;
-  height:800px;
+  height:700px;
   background-color: #242424;
   color:#FFFFFF;
 }

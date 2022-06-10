@@ -26,18 +26,27 @@ components: {
 </template>
 
 <style>
+*{
+    font-family: 'Montserrat', sans-serif;   
+}
 
 .mainContainer{
     display:flex;
     justify-content:space-around;
     align-items:center;
-    
-    background: #1D1D1B;
-    margin-top:170px;
-    min-height: 250px;
+    width:100%;
+    height:100%;
+    margin-top: 170px;
     
 }
 body{
-    background: #000000
+    background-color: #1D1D1B;
+    background-image: url("/vetor.svg");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    height: 81vh;
+    width: 100%;
 }
 </style>
+
+

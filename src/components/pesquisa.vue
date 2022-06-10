@@ -14,19 +14,22 @@
                 <input type="text" v-model="getType" placeholder="Nome do equipamento">
             </div>
 
-       </div>
-<!--         <div class="info">
-            <label>Código do equipamento</label>
-            <input type="number" value="${code}">
-            <label>Equipamento</label>
-            <input type="text" :key="equipamento.id" :value="equipamento.a"{{ equipamento }}>
-            <input type="text" v-for="stats in status" :key="stats.id" :value="status.tipo">{{ stats.tipo }}</input>
-
-            <label>Categoria</label>
-            <input type="text" v-for="cat in categoria" :key="cat.id" :value="cat.tipo">
-                    {{cat.tipo}}</input>
-        </div> -->
-    </div>
+        </div>
+        <div class="info">
+            <div class="info-item">
+                <h4>Código</h4>
+                <p>{{ serialNumber }}</p>
+            </div>
+            <div class="info-item">
+                <h4>Equipamento</h4>
+                <p>{{ nome }}</p>
+            </div>
+            <div class="info-item">
+                <h4>Localização</h4>
+                <p>{{ localizacao }}</p>
+            </div>
+        </div>
+        </div>
 </template>
 
 <script>
@@ -34,26 +37,31 @@ export default {
     name: 'pesquisa',
     components: {
     },
-      data() {
-           return {
-               code: null,
-               equipamento: null,
-               localizacao: null,
-           }
-       },
-       methods: {
-           async getEquipamento() {
-               
-               const req = await fetch(`url`)
-               const res = await req.json()
-               this.equipamento = res.equipamento;
-               this.localizacao = res.localizacao;
-   
-           }
-       },
-       mounted() {
-           this.getEquipamento()
-       }
+    data() {
+        return {
+            codigo: null,
+            nome: null,
+            localizacao: null,
+        }
+    },
+    methods: {
+        async getEquipamento() {
+            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            const res = await req.json();
+            this.serialNumber = res.serial_number,
+            this.nome = res.device_name,
+            this.localizacao = res.location
+        }
+    },
+    mounted() {
+        this.getEquipamento()
+    }
 }
 </script>
 

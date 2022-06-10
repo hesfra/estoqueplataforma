@@ -8,6 +8,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+      
     },
     {
       path: '/login',
@@ -30,7 +31,22 @@ const router = createRouter({
       name: 'todosEquipamentos',
       component: () => import('../views/todosEquipamentos.vue')
     }
-  ]
+  ],
+
+  
 })
+
+/* router.beforeEach((to, from, next) => {
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = sessionStorage.getItem('user') && sessionStorage.getItem('token');
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn ) {
+    next('/login');
+  } else {
+    next();
+  }
+})*/
 
 export default router

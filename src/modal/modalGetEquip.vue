@@ -54,7 +54,13 @@ export default {
     },
     methods: {
         async getEquip() {
-            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices/${id}`);
+            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices/${id}`,{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+                })
             const res = await req.json();
 
             this.serialNumber = res.serial_number;

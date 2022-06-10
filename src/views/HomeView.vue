@@ -1,30 +1,30 @@
 <template>
-   <Navbar />
+  <navbar />
     <div class="mainContainer">
-      <h1>Início</h1>
       <div class="imagens">
-         <img src="../assets/adicionarUsuario.svg" to="/" />
-         <img src="../assets/todosEquipamentos.svg" to="/" />
-         <img src="../assets/adicionarEquipamento.svg" to="/" />
+         <RouterLink to="/cadastro"> <img src="../assets/AdicionarEquipamento.svg"/></RouterLink>
+         <RouterLink to="/pesquisar"> <img src="../assets/PesquisarEquipamentos.svg"/></RouterLink>
+         <RouterLink to="/todosequipamentos"> <img src="../assets/VisualizarEquipamentos.svg" />"</RouterLink>
       </div>
    </div>
 </template>
+
 <script>
-import Navbar from "../components/Navbar.vue";
+import navbar from "../components/Navbar.vue";
+import { RouterLink } from "vue-router";
+
 export default {
    name: "Home",
 
    components: {
-      Navbar
+      navbar,
+      RouterLink,
    }
 }
 </script>
 
 <style scoped>
-.mainContainer{
-   flex-direction: column;
-   background-color: #000000;
-}
+
 .imagens{
    display: flex;
    justify-content: space-around;
@@ -33,12 +33,8 @@ h1{
    color: #FFFFFF;
 }
 img{
-   width: 600px;
-   height: 400px;
-   margin-top: 150px;
+   width: 100%;
+   margin-top:100px;
 }
-.nav #btnHome {
-visibility: hidden;
 
-}
 </style>
