@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       equips: null,
+      visualizarEquip: false
     }
   },
   methods: {
