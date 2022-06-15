@@ -55,10 +55,9 @@ export default {
     },
     methods: {
         async getEquip() {
-            
-            
-            this.equip = localStorage.getItem('equipamentos')
-            console.log(localStorage);
+
+         const equip = localStorage.getItem('equipamentos'[0])   
+         console.log(equip)
        
             
         }

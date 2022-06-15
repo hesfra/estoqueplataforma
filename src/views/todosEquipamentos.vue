@@ -66,8 +66,8 @@ export default {
       });
       const res = await req.json()
       this.equips = res;
-      localStorage.setItem('equipamentos', res[0]);
-      console.log(res[0]);
+      localStorage.setItem('equipamentos', res);
+      console.log(res);
       
     }
   }, mounted() {

@@ -1,15 +1,15 @@
 <template>
 
     <div class="mainContainer">
-        
-        
-        
+
+
+
         <div id="formsCadastro">
             <h3>Cadastrar</h3>
-        <h1>Escreva os detalhes dos equipamentos</h1>
+            <h1>Escreva os detalhes dos equipamentos</h1>
 
             <div class="formCadastroEncap">
-                
+
 
                 <label for="serialNumber">Serial Number</label>
                 <input type="id" id="serialNumber" name="Serial" v-model="serialNumber" />
@@ -19,34 +19,45 @@
 
                 <label for="status">Status</label>
                 <!--dropdown-->
-                <select name="status" id="status" v-model="status" class="select" required>
-                    <option v-for="stats in status" :key="stats.id" :value="status.tipo">
-                        {{ stats.tipo }} </option>
+                <select name="Status" id="status" v-model="status" class="select" required>
+                    <option value="1">Ativo</option>
+                    <option value="2">Emprestado</option>
+                    <option value="3">Manutenção</option>
+                    <option value="4">Offline</option>
                 </select>
 
 
                 <label for="categoria">Categoria</label>
                 <!--dropdown-->
                 <select name="categoria" id="categoria" v-model="categoria" class="select" required>
-                    <option placeholder="Escolha" v-for="cat in categoria" :key="cat.id" :value="cat.tipo">
-                        {{ cat.tipo }} </option>
+                    <option value="1">Móveis</option>
+                    <option value="2">Notebook</option>
+                    <option value="3">Desktop</option>
+                    <option value="4">Teclado</option>
+                    <option value="5">Mouse</option>
+                    <option value="6">Monitor</option>
+                    <option value="7">Estabilizador</option>
+                    <option value="8">Choromebook</option>
+                    <option value="9">Peça-Hardware</option>
                 </select>
 
-                <button type="submit" value="Cadastrar" id="cadastrar">Cadastrar</button>
+                <button type="submit" value="Cadastrar" id="cadastrar" v-on:click="createEquip()">Cadastrar</button>
 
             </div>
 
             <div class="formCadastroEncap2">
 
                 <label for="origem">Origem</label>
-                <select name="origem" class="select" value="selecione" required>
-                    <option v-for="origem in origens" :key="origem.id" :value="origem.tipo">select</option>
+                <select name="origem" class="select" v-model="origem" required>
+                    <option value="1">Doação</option>
+                    <option value="2">Compra</option>
+                    <option value="3">Alugado</option>
                 </select>
 
                 <label for="detalhes">Detalhes</label>
                 <textarea rows="10" type="text" id="detalhes" name="detalhes" v-model="detalhes" required></textarea>
 
-                
+
             </div>
 
         </div>
@@ -72,15 +83,27 @@ export default {
             nomeEquipamento: null,
             status: null,
             categoria: null,
+            detalhes: null,
+            origem: null,
             showModal: true,
         }
     },
     methods: {
         // método para cadastrar 
         async getSelection() {
-
+            const req = await fetch('https://estoque-plataforma.herokuapp.com/devices', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+            });
+            const res = await req.json();
+            console.log(res[0]);
+            this.status = res.status;
+            this.categoria = res.category;
         },
-        async createEquip() {
+        async createEquip(e) {
             const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices`, {
                 method: "POST",
                 headers: {
@@ -91,14 +114,15 @@ export default {
 
                     device_name: this.nomeEquipamento,
                     serial_number: this.serialNumber,
-                    detalhes: this.detalhes,
-                    status: this.status,
-                    categoria: this.categoria,
-                    origem: this.origem,
-                    
+                    device_description: this.detalhes,
+                    id_status: this.status,
+                    id_category: this.categoria,
+                    id_source: this.origem,
+
                 })
             })
             const res = await req.json();
+            console.log(res);
         }
 
     },
@@ -125,31 +149,18 @@ h3 {
 
     background: #232322;
     border-radius: 8px;
-    
-    padding:3%
+
+    padding: 3%
 }
-/* Rectangle 143 
-
-position: absolute;
-width: 1068px;
-height: 620px;
-left: 426px;
-top: 301px;
-
-background: #232322;
-border-radius: 8px;*/
-
-
 .formCadastroEncap {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 45%;
-    float:left;
-    
+    float: left;
+
 
 }
-
 .formCadastroEncap2 {
     display: flex;
     flex-direction: column;
@@ -167,13 +178,17 @@ textarea {
     border: 2px solid #707070;
     border-radius: 6px;
     margin-bottom: 14px;
+    color:#FFFFFF;
+    font-size: 1.1rem;
 }
 
 #detalhes {
     height: 100px;
+    font-size:1.05rem;
+    color:#FFFFFF;
+    padding-left:7px;
+    padding-top:5px;
 }
-
-
 
 #cadastrar {
     box-sizing: border-box;
@@ -192,7 +207,6 @@ textarea {
 select {
     margin-bottom: 15px;
 }
-
 .select {
     width: 80%;
     height: 40px;
@@ -200,6 +214,12 @@ select {
     border: 2px solid #707070;
     border-radius: 6px;
     margin-bottom: 16px;
+    color:#FFFFFF;
+    font-size:1.1rem;
+}
+option{
+    color: #FFFFFF;
+    font-size:1.1rem;
 }
 </style>
 
