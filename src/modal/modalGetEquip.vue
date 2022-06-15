@@ -2,7 +2,7 @@
     <div class="modalOverlay">
         <div class="modal">
             <div class="modalHeader">
-                <h3>{{ dispositivo }}</h3>
+                <h3>{{  }}</h3>
                 <h3>{{ serialNumber }}</h3>
                 <button class="modal-default-button" @click="$emit('fechar')">fechar</button>
             </div>
@@ -42,6 +42,7 @@ export default {
     name: 'modal',
     data() {
         return {
+            equip: null,
             dispositivo: null,
             serialNumber: null,
             status: null,
@@ -54,24 +55,16 @@ export default {
     },
     methods: {
         async getEquip() {
-            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices/${id}`,{
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-                })
-            const res = await req.json();
-
-            this.serialNumber = res.serial_number;
-            this.nome = res.device_name;
-            this.status = res.status;
-            this.categoria = res.category;
-            this.detalhes = res.details;
-            this.origem = res.origin;
-            this.localizacao = res.location;
-            this.dataEntrada = res.createdAt;
+            
+            
+            this.equip = localStorage.getItem('equipamentos')
+            console.log(localStorage);
+       
+            
         }
+    },
+    mounted() {
+        this.getEquip();
     }
 
 

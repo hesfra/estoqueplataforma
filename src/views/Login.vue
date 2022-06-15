@@ -5,7 +5,7 @@
             <h2>Entre na sua conta</h2>
             <form>
 
-                <div class="input-group" @submit="login">
+                <div class="input-group">
                     <label for="email">Email ou nome de usuário</label>
                     <input type="text" id="email" name="email" v-model="email" />
                 </div>
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="input-group">
-                    <button type="submit" class="btn">Entrar</button>
+                    <button type="submit" v-on:click="login" class="btn">Entrar</button>
                 </div>
 
             </form>
@@ -33,47 +33,39 @@ export default {
         return {
             logo: './src/assets/logo.svg',
             alt: 'logo',
-            email: 'plataforma@impact.com',
-            password: 'plataforma',
-            
-
+            email: '',
+            password: '',
         }
     },
     components: {
-
-        RouterView
+        RouterView,
     },
     methods: {
-   
-        /* async login() {
-            
-            try{
-            const req = await fetch("https://estoque-plataforma.herokuapp.com/user", {
-                method: 'POST',
+        async login(e) {
+            e.preventDefault();
+            const req = await fetch("https://estoque-plataforma.herokuapp.com/login", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email: 'plataforma@impact.com',
-                    password: 'plataforma'
+                    email: this.email,
+                    password: this.password,
                 })
-            });
+            })
+
             const res = await req.json()
-            sessionStorage.setItem('token', res.token)
-            sessionStorage.setItem('user', JSON.stringify(res.user))
-            console.log(sessionStorage)
+            console.log(res)
+            if (req.status === 200) {
+                localStorage.setItem('token', res.accessToken)
+                this.$router.push('/')
             }
-            catch(err){
-                console.log(err)
-            }
-            },
-    },
-    mounted() {
-        this.login()
-*/
+
         }
-        }
-        
+    }
+}
+
+
 
 </script>
 
@@ -126,6 +118,7 @@ input {
     width: 300px;
     margin-bottom: 10px;
 }
+
 button {
     box-sizing: border-box;
     width: 325px;
@@ -136,7 +129,7 @@ button {
     font-size: 25px;
     color: #FFFFFF;
     cursor: pointer;
-    margin-top:5%;
+    margin-top: 5%;
 }
 </style>
 

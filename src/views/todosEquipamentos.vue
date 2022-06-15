@@ -8,21 +8,21 @@
     </div>
     <div id="equipTableHeading">
       <div class="serialNumber">#</div>
+      <div class="nomeEquipamento">Nome</div>
       <div>Categoria</div>
       <div>Status</div>
-      <div>Origem</div>
       <img  id="attLogo" src="/att.png">
     </div>
     <div id="equipTableRows">
-      <div class="equipTableRow">
-        <div class="serialNumber">442</div>
-        <div class="categoria">"Hardware"</div>
-        <div class="status">"Emprestado"</div>
-        <div class="origem">"Doação"</div>
-        <button id="visualizar" @click="visualizarEquipamento()">Visualizar</button>
+      <div class="equipTableRow" v-for="equip in equips" :key="equip">
+        <div class="serialNumber">{{equip.serial_number}}</div>
+        <div class="name">{{equip.device_name}}</div>
+        <div class="categoria">{{equip.category}}</div>
+        <div class="status">{{equip.status}}</div>
+        <button id="visualizar" @click="showModal()">Visualizar</button>
       </div>
     </div>
-  <modal  v-show="visualizarEquip" v-on:fechar="visualizarEquipamento()" />
+  <modal  v-show="visualizarEquip" v-on:fechar="showModal()" />
   </div>
   
 </template>
@@ -37,17 +37,24 @@ export default {
   },
   data() {
     return {
-      serialNumber: null,
-      categoria: null,
-      status: null,
-      origem: null,
-      visualizarEquip: false,
+      equips: null,
     }
   },
   methods: {
-    visualizarEquipamento() {
+    showModal() {
       this.visualizarEquip = !this.visualizarEquip;
     },
+
+
+    /*this.serialNumber = res.serial_number;
+            this.nome = res.device_name;
+            this.status = res.status;
+            this.categoria = res.category;
+            this.detalhes = res.details;
+            this.origem = res.origin;
+            this.localizacao = res.location;
+            this.dataEntrada = res.createdAt;*/
+
     async getAllEquips() {
       const req = await fetch('https://estoque-plataforma.herokuapp.com/devices', {
         method: 'GET',
@@ -57,10 +64,13 @@ export default {
         },
       });
       const res = await req.json()
-      sessionStorage.setItem('equipamentos', JSON.stringify(res));
-      this.getAllEquips();
+      this.equips = res;
+      localStorage.setItem('equipamentos', res[0]);
+      console.log(res[0]);
+      
     }
   }, mounted() {
+   this.getAllEquips();
     
   }
 }

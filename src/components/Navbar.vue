@@ -4,7 +4,7 @@
   <RouterLink to="/" id="logoUrl">
       <img src="../assets/logo.svg" :alt="logo" id="logo"/>
   </RouterLink>
-  <RouterLink to="#" class="text">Sair</RouterLink>
+  <RouterLink to="/login" @click="logout" class="text">Sair</RouterLink>
 </div>
 </template>
 
@@ -26,6 +26,10 @@ export default {
         else{
             this.urlHome = true;
         }
+        },
+        logout(){
+            localStorage.removeItem('token');
+            this.$router.push('/login');
         }
 },
 mounted(){

@@ -81,7 +81,7 @@ export default {
 
         },
         async createEquip() {
-            const req = await fetch(`https://estoque-plataforma.herokuapp.com/`, {
+            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -89,12 +89,13 @@ export default {
                 },
                 body: JSON.stringify({
 
-                    serial_number: this.serialNumber,
                     device_name: this.nomeEquipamento,
+                    serial_number: this.serialNumber,
+                    detalhes: this.detalhes,
                     status: this.status,
                     categoria: this.categoria,
                     origem: this.origem,
-                    detalhes: this.detalhes,
+                    
                 })
             })
             const res = await req.json();
