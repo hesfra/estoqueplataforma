@@ -1,31 +1,31 @@
 <template>
-  
-  <div id="equipTable" >
+
+  <div id="equipTable">
     <div id="pesquisa">
-    <label>Digite um nome ou Serial Number</label>
-    <input type="text">
-    <button>Pesquisar</button>
+      <label>Digite um nome ou Serial Number</label>
+      <input type="text">
+      <button>Pesquisar</button>
     </div>
     <div id="equipTableHeading">
       <div class="serialNumber">#</div>
       <div class="nomeEquipamento">Nome</div>
       <div>Categoria</div>
       <div>Status</div>
-      <img  id="attLogo" src="/att.png">
+      <img id="attLogo" src="/att.png">
     </div>
     <div id="equipTableRows">
       <div class="equipTableRow" v-for="equip in equips" :key="equip.id">
-        <div class="serialNumber">{{equip.serial_number}}</div>
-        <div class="name">{{equip.device_name}}</div>
-        <div class="categoria">{{equip.category}}</div>
-        <div class="status">{{equip.status}}</div>
-        <button id="visualizar" @click="teste(equip.id)" >Visualizar</button>
-        
+        <div class="serialNumber">{{ equip.serial_number }}</div>
+        <div class="name">{{ equip.device_name }}</div>
+        <div class="categoria">{{ equip.category }}</div>
+        <div class="status">{{ equip.status }}</div>
+        <button id="visualizar" @click="teste(equip.id)">Visualizar</button>
+
       </div>
     </div>
-  <modal  v-if="visualizarEquip" v-on:fechar="showModal()" :EquipId="EquipId" />
+    <modal v-if="visualizarEquip" v-on:fechar="showModal()" :EquipId="EquipId" />
   </div>
-  
+
 </template>
 
 <script>
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-      teste(id){
+    teste(id) {
       this.showModal();
       this.EquipId = id;
       console.log(id)
@@ -52,7 +52,7 @@ export default {
     showModal() {
       this.visualizarEquip = !this.visualizarEquip;
     },
-  
+
 
 
     /*this.serialNumber = res.serial_number;
@@ -74,19 +74,20 @@ export default {
       });
       const res = await req.json()
       this.equips = res;
-      localStorage.setItem('equipamentos', res);
-
+     
+      localStorage.setItem('equipamentos', JSON.stringify(res));
       
-    }
+    },
   }, mounted() {
+
     this.getAllEquips();
-    
+
   }
 }
 </script>
 
 <style scoped>
-#pesquisa{
+#pesquisa {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -94,14 +95,15 @@ export default {
   margin-bottom: 10px;
 
 }
+
 #equipTable {
   max-width: 65%;
   min-width: 750px;
   margin: 0 auto;
-  margin-top:170px;
-  height:700px;
+  margin-top: 170px;
+  height: 700px;
   background-color: #242424;
-  color:#FFFFFF;
+  color: #FFFFFF;
 }
 
 #equipTableHeading,
@@ -111,37 +113,42 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 #equipTableHeading {
-  
+
   border-bottom: 1px solid #000000;
   font-weight: bold;
   padding: 12px;
   padding-right: 30px;
-  
+
 }
+
 #equipTableHeading div,
 .equipTableRow div {
-width:19%;
+  width: 19%;
 }
-.equipTableRow{
-  width:100%;
-  padding:12px;
+
+.equipTableRow {
+  width: 100%;
+  padding: 12px;
   border-bottom: 1px solid #000000;
 }
+
 #equipTableHeading .serialNumber,
 .equipTableRow .serialNumber {
-  width:5%;
+  width: 5%;
 }
-#attLogo{
-  width:15px;
-  height:15px;
+
+#attLogo {
+  width: 15px;
+  height: 15px;
 }
-#visualizar{
+
+#visualizar {
   border: 1px solid #FFFFFF;
   border-radius: 6px;
   color: #FFFFFF;
   cursor: pointer;
-  background-color:#242424
+  background-color: #242424
 }
-
 </style>

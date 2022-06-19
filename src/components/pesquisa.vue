@@ -3,7 +3,10 @@
         <div class="form">
             <h4>Pesquisar</h4>
             <p>Escreva o código do equipamento desejado</p>
-    
+            <input type="text" v-model="codigo" placeholder="Código do equipamento">
+            <button @click="getEquipamento">Pesquisar</button>
+            
+
         </div>
         <div class="info">
             <div class="info-item">
@@ -18,43 +21,68 @@
                 <h4>Localização</h4>
                 <p>{{ localizacao }}</p>
             </div>
+            <button id="visualizar" @click="teste(equipamento.id)">Visualizar</button>
         </div>
-        </div>
+        <modal v-if="visualizarEquip" v-on:fechar="showModal()" />
+    </div>
 </template>
 
 <script>
+import modal from '../modal/modalGetEquip.vue'
 export default {
     name: 'pesquisa',
     components: {
+        modal,
+    },
+    props: {
+        EquipId:Number,
     },
     data() {
         return {
+            visualizarEquip: false,
             codigo: null,
+            
+            serialNumber: null,
             nome: null,
             localizacao: null,
+
+
         }
     },
     methods: {
-        async getEquipamento() {
-            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-            const res = await req.json();
-            this.serialNumber = res.serial_number,
-            this.nome = res.device_name,
-            this.localizacao = res.location
-        }
+        showModal() {
+            this.visualizarEquip = !this.visualizarEquip;
+        },
+        getEquipamento() {
+           
+           var equipamentos = JSON.parse(localStorage.getItem('equipamentos'));
+           console.log(equipamentos)
+            var equipamento = equipamentos.find(equipamento => equipamento.serial_number == this.codigo)
+            if (equipamento) {
+                this.serialNumber = equipamento.serial_number
+                this.nome = equipamento.device_name
+                this.localizacao = equipamento.location
+            } else {
+                alert('Equipamento não encontrado')
+            }
+        },
+         teste() {
+      this.showModal();
+      console.log(id)
     },
-    mounted() {
-        this.getEquipamento()
     }
 }
 </script>
 
 <style scoped>
+.mainContainer {
+    display: flex;
 
+
+    width: 60%;
+
+    height: 620px;
+    background: #232322;
+    border-radius: 8px;
+}
 </style>
