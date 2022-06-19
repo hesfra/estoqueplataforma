@@ -47,7 +47,6 @@ export default {
     teste(id) {
       this.showModal();
       this.EquipId = id;
-      console.log(id)
     },
     showModal() {
       this.visualizarEquip = !this.visualizarEquip;
