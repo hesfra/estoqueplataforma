@@ -1,15 +1,15 @@
 <template>
     <div class="modalOverlay">
-        <div class="modal">
+        <div class="modal"  >
             <div class="modalHeader">
-                <h3>{{  }}</h3>
-                <h3>{{ serialNumber }}</h3>
+                <h3>{{ dispositivo}}</h3>
+                <h3>{{  serialNumber }}</h3>
                 <button class="modal-default-button" @click="$emit('fechar')">fechar</button>
             </div>
             <div class="modalBody">
                 <div class="status">
                     <label for="status">Status</label>
-                    <p>{{ status }}</p>
+                    <p>{{  }}</p>
                 </div>
                 <div class="categoria">
                     <label for="categoria">Categoria</label>
@@ -40,9 +40,12 @@
 <script>
 export default {
     name: 'modal',
+    props:{
+        EquipId: Number,
+    },
     data() {
-        return {
-            equip: null,
+        return {  
+            id: this.EquipId,  
             dispositivo: null,
             serialNumber: null,
             status: null,
@@ -54,18 +57,34 @@ export default {
         }
     },
     methods: {
-        async getEquip() {
-
-         const equip = localStorage.getItem('equipamentos'[0])   
-         console.log(equip)
-       
+                async getEquip() {
+                    console.log(this.EquipId);
+            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices/${this.EquipId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }
+            );
+            const res = await req.json();
             
-        }
-    },
-    mounted() {
-        this.getEquip();
-    }
+            this.dispositivo = res.device_name;
+            this.serialNumber = res.serial_number;
+            this.status = res.status;
+            this.categoria = res.category;
+            this.origem = res.origin;
+            this.localizacao = res.location;
+            this.dataEntrada = res.createdAt;
+            this.detalhes = res.device_description;
 
+
+        },
+
+        },
+        mounted(){
+            this.getEquip();
+        }
 
 }
 </script>
@@ -99,12 +118,13 @@ export default {
     margin-bottom: 20px;
     flex-direction: row;
 }
-.modalBody{
-    font-size:1.5rem;
-    margin-top:5%;
-    display:grid;
+
+.modalBody {
+    font-size: 1.5rem;
+    margin-top: 5%;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-auto-rows: 150px;
-    
+
 }
 </style>

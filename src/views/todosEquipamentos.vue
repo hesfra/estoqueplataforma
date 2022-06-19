@@ -1,6 +1,6 @@
 <template>
   
-  <div id="equipTable">
+  <div id="equipTable" >
     <div id="pesquisa">
     <label>Digite um nome ou Serial Number</label>
     <input type="text">
@@ -14,15 +14,16 @@
       <img  id="attLogo" src="/att.png">
     </div>
     <div id="equipTableRows">
-      <div class="equipTableRow" v-for="equip in equips" :key="equip">
+      <div class="equipTableRow" v-for="equip in equips" :key="equip.id">
         <div class="serialNumber">{{equip.serial_number}}</div>
         <div class="name">{{equip.device_name}}</div>
         <div class="categoria">{{equip.category}}</div>
         <div class="status">{{equip.status}}</div>
-        <button id="visualizar" @click="showModal()">Visualizar</button>
+        <button id="visualizar" @click="teste(equip.id)" >Visualizar</button>
+        
       </div>
     </div>
-  <modal  v-show="visualizarEquip" v-on:fechar="showModal()" />
+  <modal  v-if="visualizarEquip" v-on:fechar="showModal()" :EquipId="EquipId" />
   </div>
   
 </template>
@@ -38,13 +39,20 @@ export default {
   data() {
     return {
       equips: null,
-      visualizarEquip: false
+      visualizarEquip: false,
+      EquipId: null,
     }
   },
   methods: {
+      teste(id){
+      this.showModal();
+      this.EquipId = id;
+      console.log(id)
+    },
     showModal() {
       this.visualizarEquip = !this.visualizarEquip;
     },
+  
 
 
     /*this.serialNumber = res.serial_number;
@@ -67,11 +75,11 @@ export default {
       const res = await req.json()
       this.equips = res;
       localStorage.setItem('equipamentos', res);
-      console.log(res);
+
       
     }
   }, mounted() {
-   this.getAllEquips();
+    this.getAllEquips();
     
   }
 }

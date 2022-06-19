@@ -3,17 +3,7 @@
         <div class="form">
             <h4>Pesquisar</h4>
             <p>Escreva o código do equipamento desejado</p>
-
-            <div v-if="getType === number">
-                <label for="codigo">Digite o código do Equipamento</label>
-                <input type="number" v-model="getType" placeholder="Código do equipamento">
-            </div>
-
-            <div v-else>
-                <label for="codigo">Digite o nome do Equipamento</label>
-                <input type="text" v-model="getType" placeholder="Nome do equipamento">
-            </div>
-
+    
         </div>
         <div class="info">
             <div class="info-item">
@@ -65,5 +55,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 </style>

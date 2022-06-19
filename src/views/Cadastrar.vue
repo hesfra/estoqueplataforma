@@ -37,7 +37,7 @@
                     <option value="5">Mouse</option>
                     <option value="6">Monitor</option>
                     <option value="7">Estabilizador</option>
-                    <option value="8">Choromebook</option>
+                    <option value="8">Chromebook</option>
                     <option value="9">Peça-Hardware</option>
                 </select>
 
