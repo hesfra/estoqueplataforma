@@ -67,7 +67,7 @@
 </template>
 
 <script>
-
+import api from '../service/api';
 import modal from "../modal/modalGetEquip.vue";
 
 export default {
@@ -89,7 +89,6 @@ export default {
         }
     },
     methods: {
-        // método para cadastrar 
         async getSelection() {
             const req = await fetch('https://estoque-plataforma.herokuapp.com/devices', {
                 method: 'GET',
@@ -99,18 +98,12 @@ export default {
                 },
             });
             const res = await req.json();
-            console.log(res[0]);
             this.status = res.status;
             this.categoria = res.category;
         },
-        async createEquip(e) {
-            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
+        async createEquip() {
+
+            const teste = JSON.stringify({
 
                     device_name: this.nomeEquipamento,
                     serial_number: this.serialNumber,
@@ -120,9 +113,9 @@ export default {
                     id_source: this.origem,
 
                 })
-            })
-            const res = await req.json();
+            const res = await api.createEquip(teste);
             console.log(res);
+            
         }
 
     },
@@ -152,6 +145,7 @@ h3 {
 
     padding: 3%
 }
+
 .formCadastroEncap {
     display: flex;
     flex-direction: column;
@@ -161,6 +155,7 @@ h3 {
 
 
 }
+
 .formCadastroEncap2 {
     display: flex;
     flex-direction: column;
@@ -178,16 +173,16 @@ textarea {
     border: 2px solid #707070;
     border-radius: 6px;
     margin-bottom: 14px;
-    color:#FFFFFF;
+    color: #FFFFFF;
     font-size: 1.1rem;
 }
 
 #detalhes {
     height: 100px;
-    font-size:1.05rem;
-    color:#FFFFFF;
-    padding-left:7px;
-    padding-top:5px;
+    font-size: 1.05rem;
+    color: #FFFFFF;
+    padding-left: 7px;
+    padding-top: 5px;
 }
 
 #cadastrar {
@@ -207,6 +202,7 @@ textarea {
 select {
     margin-bottom: 15px;
 }
+
 .select {
     width: 80%;
     height: 40px;
@@ -214,12 +210,13 @@ select {
     border: 2px solid #707070;
     border-radius: 6px;
     margin-bottom: 16px;
-    color:#FFFFFF;
-    font-size:1.1rem;
-}
-option{
     color: #FFFFFF;
-    font-size:1.1rem;
+    font-size: 1.1rem;
+}
+
+option {
+    color: #FFFFFF;
+    font-size: 1.1rem;
 }
 </style>
 

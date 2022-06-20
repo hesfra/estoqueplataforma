@@ -25,6 +25,8 @@
 </template>
 
 <script>
+
+import api from '../service/api'
 import { RouterView } from 'vue-router'
 
 export default {
@@ -43,27 +45,20 @@ export default {
     methods: {
         async login(e) {
             e.preventDefault();
-            const req = await fetch("https://estoque-plataforma.herokuapp.com/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: this.email,
-                    password: this.password,
-                })
-            })
 
-            const res = await req.json()
-            console.log(res)
-            if (req.status === 200) {
-                localStorage.setItem('token', res.accessToken)
-                this.$router.push('/')
+            const data = JSON.stringify({
+                email: this.email,
+                password: this.password,
+            });
+            const res = await api.login(data);
+
+            if (localStorage.getItem('token')) {
+                this.$router.push('/');
             }
-
         }
     }
 }
+
 
 
 

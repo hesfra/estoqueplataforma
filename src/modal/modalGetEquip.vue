@@ -1,15 +1,15 @@
 <template>
     <div class="modalOverlay">
-        <div class="modal"  >
+        <div class="modal">
             <div class="modalHeader">
-                <h3>{{ dispositivo}}</h3>
-                <h3>{{  serialNumber }}</h3>
+                <h3>{{ dispositivo }}</h3>
+                <h3>{{ serialNumber }}</h3>
                 <button class="modal-default-button" @click="$emit('fechar')">fechar</button>
             </div>
             <div class="modalBody">
                 <div class="status">
                     <label for="status">Status</label>
-                    <p>{{  }}</p>
+                    <p>{{ }}</p>
                 </div>
                 <div class="categoria">
                     <label for="categoria">Categoria</label>
@@ -38,14 +38,15 @@
 </template>
 
 <script>
+import api from '../service/api';
 export default {
     name: 'modal',
-    props:{
+    props: {
         EquipId: Number,
     },
     data() {
-        return {  
-            id: this.EquipId,  
+        return {
+            id: this.EquipId,
             dispositivo: null,
             serialNumber: null,
             status: null,
@@ -57,18 +58,9 @@ export default {
         }
     },
     methods: {
-                async getEquip() {
-                    console.log(this.EquipId);
-            const req = await fetch(`https://estoque-plataforma.herokuapp.com/devices/${this.EquipId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            }
-            );
-            const res = await req.json();
-            
+        async getEquip() {
+            const res = await api.getEquipamento(this.id);
+
             this.dispositivo = res.device_name;
             this.serialNumber = res.serial_number;
             this.status = res.status;
@@ -81,10 +73,10 @@ export default {
 
         },
 
-        },
-        mounted(){
-            this.getEquip();
-        }
+    },
+    mounted() {
+        this.getEquip();
+    }
 
 }
 </script>

@@ -19,7 +19,7 @@
         <div class="name">{{ equip.device_name }}</div>
         <div class="categoria">{{ equip.category }}</div>
         <div class="status">{{ equip.status }}</div>
-        <button id="visualizar" @click="teste(equip.id)">Visualizar</button>
+        <button id="visualizar" @click="openModal(equip.id)">Visualizar</button>
 
       </div>
     </div>
@@ -29,11 +29,14 @@
 </template>
 
 <script>
+import api from '../service/api.js'
 import modal from '../modal/modalGetEquip.vue';
 export default {
   name: 'todosEquipamentos',
   components: {
     modal,
+
+
 
   },
   data() {
@@ -44,43 +47,23 @@ export default {
     }
   },
   methods: {
-    teste(id) {
+    openModal(id) {
       this.showModal();
       this.EquipId = id;
     },
     showModal() {
       this.visualizarEquip = !this.visualizarEquip;
     },
-
-
-
-    /*this.serialNumber = res.serial_number;
-            this.nome = res.device_name;
-            this.status = res.status;
-            this.categoria = res.category;
-            this.detalhes = res.details;
-            this.origem = res.origin;
-            this.localizacao = res.location;
-            this.dataEntrada = res.createdAt;*/
-
     async getAllEquips() {
-      const req = await fetch('https://estoque-plataforma.herokuapp.com/devices', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-      });
-      const res = await req.json()
-      this.equips = res;
      
+      const res = await api.getAllEquipamentos();
+      this.equips = res;
+
       localStorage.setItem('equipamentos', JSON.stringify(res));
-      
     },
+
   }, mounted() {
-
     this.getAllEquips();
-
   }
 }
 </script>
