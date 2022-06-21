@@ -4,6 +4,7 @@ const baseUrl = 'https://estoque-plataforma.herokuapp.com/'
 
 
 //loga no site
+
 const login = async (data) => {
     const req = await fetch(`${baseUrl}login`, {
         method: 'POST',
@@ -21,6 +22,7 @@ const login = async (data) => {
     }
 }
 //cadastra novo equipamento
+
 const createEquip = async (teste) => {
     const req = await fetch(`${baseUrl}devices`, {
         method: 'POST',
@@ -35,6 +37,7 @@ const createEquip = async (teste) => {
 }
 
 //pega todos os equipamentos
+
 const getAllEquipamentos = async () => {
     const req = await fetch(`${baseUrl}devices`, {
         method: 'GET',
@@ -44,10 +47,12 @@ const getAllEquipamentos = async () => {
         },
     });
     const res = await req.json()
-    return res
+        return res
+    
 }
 
 //pega um equipamento especifico
+
 const getEquipamento = async (id) => {
     const req = await fetch(`${baseUrl}devices/${id}`, {
         method: 'GET',

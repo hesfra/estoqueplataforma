@@ -1,10 +1,11 @@
 <template>
     <div class="modalOverlay">
         <div class="modal">
+            <button class="CloseBtn" @click="$emit('fechar')">X</button>
             <div class="modalHeader">
-                <h3>{{ dispositivo }}</h3>
-                <h3>{{ serialNumber }}</h3>
-                <button class="modal-default-button" @click="$emit('fechar')">fechar</button>
+                <h3>Nome:  {{ dispositivo }}</h3>
+                <h3>Serial Number:  {{ serialNumber }}</h3>
+                
             </div>
             <div class="modalBody">
                 <div class="status">
@@ -19,19 +20,24 @@
                     <label for="origem">Origem</label>
                     <p>{{ origem }}</p>
                 </div>
-                <div class="localizacao">
-                    <label for="localizacao">Localização</label>
-                    <p>{{ localizacao }}</p>
-                </div>
+                
                 <div class="data">
                     <label for="data">Data de entrada</label>
                     <p>{{ dataEntrada }}</p>
                 </div>
+
+                <div class="localizacao">
+                    <label for="localizacao">Localização</label>
+                    <p>{{ localizacao }}</p>
+                </div>
+                
                 <div class="detalhes">
                     <label for="detalhes">Detalhes</label>
                     <p>{{ detalhes }}</p>
                 </div>
+                
             </div>
+            <button class="editBtn">Editar</button>
         </div>
     </div>
 
@@ -69,10 +75,7 @@ export default {
             this.localizacao = res.location;
             this.dataEntrada = res.createdAt;
             this.detalhes = res.device_description;
-
-
         },
-
     },
     mounted() {
         this.getEquip();
@@ -96,27 +99,39 @@ export default {
 .modal {
     text-align: center;
     background-color: #161515;
-    height: 50%;
+    height: 60%;
     width: 75%;
     margin-top: 10%;
     padding: 60px 0;
     border-radius: 20px;
 }
+.CloseBtn{
+border:none;
+background:none;
+color:#FFFFFF;
+font-size:2.3rem;
+cursor:pointer;
+font-weight: bold;
+position: relative;
+top: -10%;
+left: 48%;
+z-index: 1;
+}
 
-.header {
+.modalHeader {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
     flex-direction: row;
+    justify-content: space-evenly;
+    position: relative;
+    top: -20%;
+    
 }
 
 .modalBody {
     font-size: 1.5rem;
-    margin-top: 5%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: 150px;
-
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
 }
+
 </style>

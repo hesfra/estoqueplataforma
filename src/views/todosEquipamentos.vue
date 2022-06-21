@@ -55,14 +55,14 @@ export default {
       this.visualizarEquip = !this.visualizarEquip;
     },
     async getAllEquips() {
-     
+
       const res = await api.getAllEquipamentos();
-      this.equips = res;
-
+      const activeEquips = res.filter(equip => equip.enabled == true);
+      this.equips = activeEquips;
       localStorage.setItem('equipamentos', JSON.stringify(res));
-    },
-
-  }, mounted() {
+    }
+  },
+  mounted() {
     this.getAllEquips();
   }
 }
