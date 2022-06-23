@@ -5,8 +5,6 @@
             <p>Escreva o código do equipamento desejado</p>
             <input type="text" v-model="codigo" placeholder="Código do equipamento">
             <button @click="getEquipamento">Pesquisar</button>
-
-
         </div>
         <div class="info">
             <div class="info-item">
@@ -42,8 +40,6 @@ export default {
             nome: null,
             localizacao: null,
             EquipId: null,
-
-
         }
     },
     methods: {
@@ -53,29 +49,24 @@ export default {
         getEquipamento() {
 
             var equipamentos = JSON.parse(localStorage.getItem('equipamentos'));
-            console.log(equipamentos)
             var equipamento = equipamentos.find(equipamento => equipamento.serial_number == this.codigo)
             if (equipamento) {
                 this.serialNumber = equipamento.serial_number
                 this.nome = equipamento.device_name
                 this.localizacao = equipamento.location
                 this.EquipId = equipamento.id
-                console.log(this.EquipId)
             } else {
                 alert('Equipamento não encontrado')
             }
         },
-        },
-    }
+    },
+}
 </script>
 
 <style scoped>
 .mainContainer {
     display: flex;
-
-
     width: 60%;
-
     height: 620px;
     background: #232322;
     border-radius: 8px;

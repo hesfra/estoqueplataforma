@@ -1,7 +1,7 @@
 <script>
 import navbar from "./components/Navbar.vue";
 import { RouterLink, RouterView } from 'vue-router';
-
+import  VueTheMask  from "vue-the-mask";
 
 export default{
 data(){
@@ -12,7 +12,8 @@ data(){
 },
 components: {
     navbar,
-    RouterView
+    RouterView,
+    VueTheMask,
 },
 }
 </script>

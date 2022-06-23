@@ -89,38 +89,19 @@ export default {
         }
     },
     methods: {
-        async getSelection() {
-            const req = await fetch('https://estoque-plataforma.herokuapp.com/devices', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-            });
-            const res = await req.json();
-            this.status = res.status;
-            this.categoria = res.category;
-        },
         async createEquip() {
-
             const teste = JSON.stringify({
 
-                    device_name: this.nomeEquipamento,
-                    serial_number: this.serialNumber,
-                    device_description: this.detalhes,
-                    id_status: this.status,
-                    id_category: this.categoria,
-                    id_source: this.origem,
+                device_name: this.nomeEquipamento,
+                serial_number: this.serialNumber,
+                device_description: this.detalhes,
+                id_status: this.status,
+                id_category: this.categoria,
+                id_source: this.origem,
 
-                })
+            })
             const res = await api.createEquip(teste);
-            console.log(res);
-            
         }
-
-    },
-    mounted() {
-        this.getSelection();
     }
 }
 </script>

@@ -47,8 +47,8 @@ const getAllEquipamentos = async () => {
         },
     });
     const res = await req.json()
-        return res
-    
+    return res
+
 }
 
 //pega um equipamento especifico
@@ -65,7 +65,33 @@ const getEquipamento = async (id) => {
     return res
 }
 
+//cadastra nova localização
 
+const createLocal = async ( id ,localizacao) => {
+    const req = await fetch(`${baseUrl}devices/${id}/location`, {
+        method: 'POST',
+        headers: {
+            'content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: localizacao
+    });
+    const res = await req.json();
+    return res;
+
+}
+
+const getLocal = async(id) =>{
+    const req = await fetch(`${baseUrl}devices/${id}/location`,{
+        method: 'GET',
+        headers: {
+            'content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    const res = await req.json();
+    return res
+}
 
 
 
@@ -74,6 +100,8 @@ const api = {
     createEquip,
     login,
     getEquipamento,
+    createLocal,
+    getLocal,
 
 
 }

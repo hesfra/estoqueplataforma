@@ -1,9 +1,9 @@
 <template>
-  <navbar />
-    <div class="mainContainer">
+   <navbar />
+   <div class="mainContainer">
       <div class="imagens">
-         <RouterLink to="/cadastro"> <img src="../assets/AdicionarEquipamento.svg"/></RouterLink>
-         <RouterLink to="/pesquisar"> <img src="../assets/PesquisarEquipamentos.svg"/></RouterLink>
+         <RouterLink to="/cadastro"> <img src="../assets/AdicionarEquipamento.svg" /></RouterLink>
+         <RouterLink to="/pesquisar"> <img src="../assets/PesquisarEquipamentos.svg" /></RouterLink>
          <RouterLink to="/todosequipamentos"> <img src="../assets/VisualizarEquipamentos.svg" />"</RouterLink>
       </div>
    </div>
@@ -24,17 +24,17 @@ export default {
 </script>
 
 <style scoped>
-
-.imagens{
+.imagens {
    display: flex;
    justify-content: space-around;
 }
-h1{
+
+h1 {
    color: #FFFFFF;
 }
-img{
-   width: 100%;
-   margin-top:100px;
-}
 
+img {
+   width: 100%;
+   margin-top: 100px;
+}
 </style>
