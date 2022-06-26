@@ -53,6 +53,9 @@
                     <option value="2">Compra</option>
                     <option value="3">Alugado</option>
                 </select>
+                
+                <label for="Localizacao">Localização</label>
+                <input type="text" id="localizacao" name="localizacao" v-model="localizacao" />
 
                 <label for="detalhes">Detalhes</label>
                 <textarea rows="10" type="text" id="detalhes" name="detalhes" v-model="detalhes" required></textarea>
@@ -85,6 +88,7 @@ export default {
             categoria: null,
             detalhes: null,
             origem: null,
+            localizacao: null,
             showModal: true,
         }
     },
@@ -98,6 +102,7 @@ export default {
                 id_status: this.status,
                 id_category: this.categoria,
                 id_source: this.origem,
+                id_location: this.localizacao,
 
             })
             const res = await api.createEquip(teste);

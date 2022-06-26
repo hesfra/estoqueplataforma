@@ -69,7 +69,7 @@ export default {
 <style scoped>
 .Pesquisa {
     display: flex;
-    width: 50%;
+    width: 60%;
     height: 620px;
     background: #232322;
     border-radius: 8px;
@@ -83,10 +83,11 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    padding-left:30px;
 }
 
 .form h4 {
-    font-size: 1.9rem;
+    font-size: 2.1rem;
     margin-top: 20px;
     margin-left: 20px;
     color: #635f5f;
@@ -164,6 +165,7 @@ export default {
     border-radius: 8px;
     cursor: pointer;
     width: 60%;
+    top:15;
 }
 </style>
 

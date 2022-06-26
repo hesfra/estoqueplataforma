@@ -1,7 +1,7 @@
 <script>
 import navbar from "./components/Navbar.vue";
 import { RouterLink, RouterView } from 'vue-router';
-import  VueTheMask  from "vue-the-mask";
+
 
 export default{
 data(){
@@ -12,8 +12,7 @@ data(){
 },
 components: {
     navbar,
-    RouterView,
-    VueTheMask,
+    RouterView
 },
 }
 </script>
@@ -29,6 +28,7 @@ components: {
 <style>
 *{
     font-family: 'Montserrat', sans-serif;   
+    
 }
 
 .mainContainer{
@@ -47,6 +47,7 @@ body{
     background-position: bottom;
     height: 81vh;
     width: 100%;
+    overflow: hidden;
 }
 </style>
 

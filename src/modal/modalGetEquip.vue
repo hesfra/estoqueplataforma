@@ -39,7 +39,10 @@
                             <textarea name="Detalhes" :placeholder="detalhes" v-model="detalhes" cols="30" rows="3"
                                 :disabled="editar"></textarea>
                         </div>
-                         <button class="editBtn" v-on:click.prevent="Editar">Editar</button>
+                        <button v-if="editar == true" class="editBtn" v-on:click.prevent="Editar">Editar</button>
+                        <button v-if="editar == false" class="editBtn" v-on:click.prevent="UpdateEquip">Atualizar</button>
+                        <button v-if="editar == false" v-on:click.prevent="inativarEquip">Excluir</button>
+
                     </form>
                 </div>
 
@@ -54,39 +57,38 @@
                         </div>
                         <div class="Inputs">
                             <label for="nomeContato">Nome do Contato</label>
-                            <input type="text" :placeholder="nomeContato" name="nomeContato" v-model="nomeContato"
-                                :disabled="editar" />
+                            <input type="text" :placeholder="nomeContato" name="nomeContato"
+                                disabled />
                         </div>
                         <div class="Inputs">
                             <label for="telefone">Telefone</label>
-                            <input type="tel" :placeholder="telefone" name="telefone" v-model="telefone"
-                                :disabled="editar" />
+                            <input type="tel" :placeholder="telefone" name="telefone" 
+                                disabled />
                         </div>
                         <div class="Inputs">
                             <label for="email">Email</label>
-                            <input type="text" :placeholder="email" name="email" v-model="email" :disabled="editar" />
+                            <input type="text" :placeholder="email" name="email" disabled />
                         </div>
                         <div class="Inputs">
                             <label for="endereco">Endereço</label>
-                            <input type="text" :placeholder="localizacao" name="endereco" v-model="localizacao"
-                                :disabled="editar" />
+                            <input type="text" :placeholder="localizacao" name="endereco"
+                                disabled />
                         </div>
                     </form>
 
                 </div>
             </div>
-           
+
         </div>
     </div>
 </template>
 
 <script>
 import api from '../service/api';
-import { theMask } from 'vue-the-mask';
 export default {
     name: 'modal',
     components: {
-        theMask,
+
     },
     props: {
         EquipId: Number,
@@ -94,14 +96,14 @@ export default {
     data() {
         return {
             id: this.EquipId,
-            
+
             /*     HEADER      */
-            
+
             dispositivo: null,
             serialNumber: null,
-            
+
             /*     DETALHES    */
-            
+
             status: null,
             categoria: null,
             origem: null,
@@ -110,13 +112,9 @@ export default {
 
             /*    LOCALIZACAO  */
 
-            localizacao: {
-                nomeContato: null,
-                telefone: null,
-                email: null,
-                endereco: null,
-            },
-           /* Botão Editar */
+            localizacao: null,
+
+            /* Botão Editar */
 
             editar: true,
 
@@ -131,14 +129,34 @@ export default {
             this.status = res.status;
             this.categoria = res.category;
             this.origem = res.origin;
-            this.localizacao = res.location;
+            this.localizacao = res.id_location;
             this.dataEntrada = res.createdAt;
             this.detalhes = res.device_description;
-            
+
         },
         Editar() {
             this.editar = false;
             console.log('clickou aqui')
+        },
+        async UpdateEquip() {
+             const  data = JSON.stringify({ 
+                    status: this.status,
+                    category: this.categoria,
+                    origin: this.origem,
+                    id_location: this.localizacao,
+                    createdAt: this.dataEntrada,
+                    device_description: this.detalhes,
+                    updatedAt: new Date()
+             });
+                const res = await api.updateEquipamento(this.id, data);
+                console.log(res);
+                this.editar = true;
+             this.getEquip();
+        },
+        async inativarEquip() {
+            const res = await api.inativarEquipamento(this.id);
+            console.log(res);
+            this.getEquip();
         },
         /*async getLocal() {
             const res = await api.getLocal(this.id);
@@ -220,7 +238,8 @@ textarea {
     font-weight: bold;
 
 }
-.editBtn{
+
+.editBtn {
     background-color: #EB7B3C;
     color: #FFFFFF;
     font-size: 1.2rem;

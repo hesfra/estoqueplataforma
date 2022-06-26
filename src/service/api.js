@@ -65,9 +65,39 @@ const getEquipamento = async (id) => {
     return res
 }
 
+//atualização em um equipamento
+
+const updateEquipamento = async (id, data) => {
+    const req = await fetch(`${baseUrl}devices/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: data
+    });
+    const res = await req.json()
+    return res
+}
+// inativa um equipamento
+const inativarEquipamento = async (id) => {
+    const req = await fetch(`${baseUrl}devices/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            enabled: false
+        })
+    });
+    const res = await req.json()
+    return res
+}
+
 //cadastra nova localização
 
-const createLocal = async ( id ,localizacao) => {
+const createLocal = async ( id , localizacao) => {
     const req = await fetch(`${baseUrl}devices/${id}/location`, {
         method: 'POST',
         headers: {
@@ -96,12 +126,16 @@ const getLocal = async(id) =>{
 
 
 const api = {
-    getAllEquipamentos,
-    createEquip,
     login,
+    createEquip,
+    getAllEquipamentos,
     getEquipamento,
+    updateEquipamento,
+    inativarEquipamento,
     createLocal,
     getLocal,
+    
+
 
 
 }
