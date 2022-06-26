@@ -36,9 +36,10 @@
                         </div>
                         <div class="Inputs">
                             <label for="detalhes">Detalhes</label>
-                            <textarea name="Detalhes" :placeholder="detalhes" v-model="detalhes" cols="30" rows="10"
+                            <textarea name="Detalhes" :placeholder="detalhes" v-model="detalhes" cols="30" rows="3"
                                 :disabled="editar"></textarea>
                         </div>
+                         <button class="editBtn" v-on:click.prevent="Editar">Editar</button>
                     </form>
                 </div>
 
@@ -74,7 +75,7 @@
 
                 </div>
             </div>
-            <button class="editBtn" v-on:click="Editar">Editar</button>
+           
         </div>
     </div>
 </template>
@@ -109,11 +110,12 @@ export default {
 
             /*    LOCALIZACAO  */
 
-            localizacao: null,
-            nomeContato: null,
-            telefone: null,
-            email: null,
-           
+            localizacao: {
+                nomeContato: null,
+                telefone: null,
+                email: null,
+                endereco: null,
+            },
            /* Botão Editar */
 
             editar: true,
@@ -132,26 +134,22 @@ export default {
             this.localizacao = res.location;
             this.dataEntrada = res.createdAt;
             this.detalhes = res.device_description;
-            this.getLocal();
+            
         },
         Editar() {
             this.editar = false;
             console.log('clickou aqui')
         },
-        async getLocal() {
+        /*async getLocal() {
             const res = await api.getLocal(this.id);
-
-            nomeContato = res.contact_name;
-            telefone = res.contact_phone;
-            email = res.contact_email;
-            localizacao = res.address;
             console.log(res)
-        }
+            
+            
+        } */
     },
     mounted() {
         this.getEquip();
     }
-
 }
 </script>
 
@@ -209,8 +207,7 @@ export default {
     justify-content: space-evenly;
 }
 
-.Inputs,
-TheMask {
+.Inputs {
     display: flex;
     flex-direction: column;
     font-size: 1.1rem;
@@ -222,5 +219,17 @@ textarea {
     margin-bottom: 15px;
     font-weight: bold;
 
+}
+.editBtn{
+    background-color: #EB7B3C;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 45%;
 }
 </style>

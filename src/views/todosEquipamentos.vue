@@ -60,6 +60,7 @@ export default {
       const activeEquips = res.filter(equip => equip.enabled == true);
       this.equips = activeEquips;
       localStorage.setItem('equipamentos', JSON.stringify(res));
+      console.log(res)
     }
   },
   mounted() {
