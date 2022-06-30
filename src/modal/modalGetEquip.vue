@@ -57,21 +57,21 @@
                         </div>
                         <div class="Inputs">
                             <label for="nomeContato">Nome do Contato</label>
-                            <input type="text" :placeholder="nomeContato" name="nomeContato"
+                            <input type="text" placeholder="nome do Contato" name="nomeContato"
                                 disabled />
                         </div>
                         <div class="Inputs">
                             <label for="telefone">Telefone</label>
-                            <input type="tel" :placeholder="telefone" name="telefone" 
+                            <input type="tel" placeholder="(21)######-#####" name="telefone" 
                                 disabled />
                         </div>
                         <div class="Inputs">
                             <label for="email">Email</label>
-                            <input type="text" :placeholder="email" name="email" disabled />
+                            <input type="text" placeholder="email@email.com" name="email" disabled />
                         </div>
                         <div class="Inputs">
                             <label for="endereco">Endereço</label>
-                            <input type="text" :placeholder="localizacao" name="endereco"
+                            <input type="text" placeholder="localizacao" name="endereco"
                                 disabled />
                         </div>
                     </form>

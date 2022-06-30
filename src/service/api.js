@@ -80,6 +80,7 @@ const updateEquipamento = async (id, data) => {
     return res
 }
 // inativa um equipamento
+
 const inativarEquipamento = async (id) => {
     const req = await fetch(`${baseUrl}devices/${id}`, {
         method: 'PATCH',

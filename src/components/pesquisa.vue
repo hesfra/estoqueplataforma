@@ -165,7 +165,7 @@ export default {
     border-radius: 8px;
     cursor: pointer;
     width: 60%;
-    top:15;
+    
 }
 </style>
 
