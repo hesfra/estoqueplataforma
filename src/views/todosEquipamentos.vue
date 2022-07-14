@@ -1,45 +1,43 @@
 <template>
-    <div id="equipTable">
-
-      <div id="pesquisa">
-        <label>Digite um nome ou Serial Number</label>
-        <input type="text">
-        <button>Pesquisar</button>
-      </div>
-      <div id="equipTableHeading">
-        <div class="serialNumber">#</div>
-        <div class="nomeEquipamento">Nome</div>
-        <div>Categoria</div>
-        <div>Status</div>
-        <img id="attLogo" src="/att.png">
-      </div>
-      <div id="equipTableRows">
-
-        <div class="equipTableRow" v-for="equip in equips" :key="equip.id">
-          <div class="serialNumber">{{ equip.serial_number }}</div>
-          <div class="name">{{ equip.device_name }}</div>
-          <div class="categoria">{{ equip.category }}</div>
-          <div class="status">{{ equip.status }}</div>
-          <button id="visualizar" @click="openModal(equip.id)">Visualizar</button>
-
-        </div>
-      </div>
-
-      <modal v-if="visualizarEquip" v-on:fechar="showModal()" :EquipId="EquipId" />
-
-
+  <div id="equipTable">
+    <filtro :equips="equips" @set-equips="setEquips"/>
+    <div id="equipTableHeading">
+      <div class="serialNumber">#</div>
+      <div class="nomeEquipamento">Nome</div>
+      <div>Categoria</div>
+      <div>Status</div>
+      <img id="attLogo" src="/att.png">
     </div>
-    <paginacao id="paginacao" :offset="paginacao.offset" :total="paginacao.total" :limit="paginacao.limit" @change-page="changePage" />
+    <div id="equipTableRows">
+
+      <div class="equipTableRow" v-for="equip in equips" :key="equip.id">
+        <div class="serialNumber">{{ equip.serial_number }}</div>
+        <div class="name">{{ equip.device_name }}</div>
+        <div class="categoria">{{ equip.category }}</div>
+        <div class="status">{{ equip.status }}</div>
+        <button id="visualizar" @click="openModal(equip.id)">Visualizar</button>
+
+      </div>
+    </div>
+
+    <modal v-if="visualizarEquip" v-on:fechar="showModal()" :EquipId="EquipId" />
+
+
+  </div>
+  <paginacao id="paginacao" :offset="paginacao.offset" :total="paginacao.total" :limit="paginacao.limit"
+    @change-page="changePage" />
 
 </template>
 
 <script>
 import api from '../service/api.js'
+import filtro from '../components/filtro.vue'
 import modal from '../modal/modalGetEquip.vue';
 import paginacao from '../components/paginacao.vue';
 export default {
   name: 'todosEquipamentos',
   components: {
+    filtro,
     modal,
     paginacao,
   },
@@ -51,7 +49,7 @@ export default {
 
       paginacao: {
         total: 0,
-        limit: 4,
+        limit: 10,
         offset: 0,
       }
     }
@@ -82,6 +80,11 @@ export default {
       this.equips = this.pages[value];
       this.paginacao.offset = value;
 
+    },
+
+    setEquips(equips) {
+      console.log(equips);
+      this.equips = equips;
     }
   },
   mounted() {
@@ -91,14 +94,15 @@ export default {
 </script>
 
 <style scoped>
-#paginacao{
+#paginacao {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   width: 100%;
-  
+
 }
+
 #pesquisa {
   display: flex;
   align-items: center;

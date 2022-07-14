@@ -27,6 +27,7 @@ export default {
 .imagens {
    display: flex;
    justify-content: space-around;
+   margin: 150px auto;
 }
 
 h1 {
@@ -34,7 +35,7 @@ h1 {
 }
 
 img {
-   width: 100%;
-   margin-top: 100px;
+
+width: 100%;
 }
 </style>
