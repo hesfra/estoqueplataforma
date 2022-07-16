@@ -1,32 +1,42 @@
 <template>
-  <div id="equipTable">
-    <filtro :equips="equips" @set-equips="setEquips"/>
-    <div id="equipTableHeading">
-      <div class="serialNumber">#</div>
-      <div class="nomeEquipamento">Nome</div>
-      <div>Categoria</div>
-      <div>Status</div>
-      <img id="attLogo" src="/att.png">
-    </div>
-    <div id="equipTableRows">
 
-      <div class="equipTableRow" v-for="equip in equips" :key="equip.id">
-        <div class="serialNumber">{{ equip.serial_number }}</div>
-        <div class="name">{{ equip.device_name }}</div>
-        <div class="categoria">{{ equip.category }}</div>
-        <div class="status">{{ equip.status }}</div>
-        <button id="visualizar" @click="openModal(equip.id)">Visualizar</button>
+  <div id="todosEquipamentos">
+
+    <div class="headerList">
+      <filtro :equips="equips" @set-equips="setEquips" />
+      <RouterLink to="/cadastro"><button>Adicionar</button></RouterLink>
+    </div>
+
+    <div id="equipTable">
+      <div id="equipTableHeading">
+        <div class="serialNumber">#</div>
+        <div class="nomeEquipamento">Nome</div>
+        <div>Categoria</div>
+        <div>Status</div>
+        <img id="attLogo" src="/att.png">
+      </div>
+
+      <div id="equipTableRows">
+
+        <div class="equipTableRow" v-for="equip in equips" :key="equip.id">
+          <div class="serialNumber">{{ equip.serial_number }}</div>
+          <div class="name">{{ equip.device_name }}</div>
+          <div class="categoria">{{ equip.category }}</div>
+          <div class="status">{{ equip.status }}</div>
+          <button id="visualizar" @click="openModal(equip.id)">Visualizar</button>
+        </div>
 
       </div>
+
+      <modal v-if="visualizarEquip" v-on:fechar="showModal()" :EquipId="EquipId" />
+
+
     </div>
 
-    <modal v-if="visualizarEquip" v-on:fechar="showModal()" :EquipId="EquipId" />
-
+    <paginacao id="paginacao" :offset="paginacao.offset" :total="paginacao.total" :limit="paginacao.limit"
+      @change-page="changePage" />
 
   </div>
-  <paginacao id="paginacao" :offset="paginacao.offset" :total="paginacao.total" :limit="paginacao.limit"
-    @change-page="changePage" />
-
 </template>
 
 <script>
@@ -34,12 +44,14 @@ import api from '../service/api.js'
 import filtro from '../components/filtro.vue'
 import modal from '../modal/modalGetEquip.vue';
 import paginacao from '../components/paginacao.vue';
+import { RouterLink } from 'vue-router';
 export default {
   name: 'todosEquipamentos',
   components: {
     filtro,
     modal,
     paginacao,
+    RouterLink
   },
   data() {
     return {
@@ -94,6 +106,21 @@ export default {
 </script>
 
 <style scoped>
+#todosEquipamentos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 150px;
+}
+
 #paginacao {
   display: flex;
   justify-content: center;
@@ -103,20 +130,10 @@ export default {
 
 }
 
-#pesquisa {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 10px;
-
-}
-
 #equipTable {
   max-width: 65%;
   min-width: 65%;
   margin: 0 auto;
-  margin-top: 170px;
   height: auto;
   background-color: #242424;
   color: #FFFFFF;

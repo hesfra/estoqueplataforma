@@ -35,7 +35,7 @@ h1 {
 }
 
 img {
-
+   
 width: 100%;
 }
 </style>

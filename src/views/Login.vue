@@ -1,6 +1,8 @@
 <template>
+<navbar/>
     <div class="mainContainer">
         <div class="form">
+            <div id="form">
             <h4>Welcome</h4>
             <h2>Entre na sua conta</h2>
             <form>
@@ -20,6 +22,7 @@
                 </div>
 
             </form>
+            </div>
         </div>
     </div>
 </template>
@@ -28,6 +31,7 @@
 
 import api from '../service/api'
 import { RouterView } from 'vue-router'
+import navbar from '../components/Navbar.vue'
 
 export default {
     name: 'Login',
@@ -41,6 +45,7 @@ export default {
     },
     components: {
         RouterView,
+        navbar,
     },
     methods: {
         async login(e) {
@@ -73,10 +78,14 @@ export default {
     display: flex;
     flex-direction: column;
     width: 520px;
-    height: 600px;
+    height: 760px;
     align-items: center;
     background: #232322;
     border-radius: 8px;
+}
+#form{
+    width:420px;
+    height:532px;
 }
 
 form {
@@ -87,21 +96,34 @@ form {
 }
 
 h4 {
-    color: #646464;
-    font-size: 1.5rem;
+    color: #817C7C;
+    font-size: 32px;
+    font-weight:300;
+    text-align: center;
 }
 
 h2 {
-    font-size: 1.9rem;
+    width: 420px;
+    text-align: center;
     color: #FFFFFF;
+    font-size: 40px;
+    margin-top: -15px;
+    margin-bottom: 5rem;
+    font-weight: 300;
+    
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
     font-size: 1.65rem;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 25px;
+    width: 420px;
+}
+label{
+font-size: 20px;
+margin-bottom: 10px;
 }
 
 input {
@@ -110,14 +132,14 @@ input {
     background: #232322;
     color: #c9c9c9;
     padding: 10px;
-    width: 300px;
+    width: 398px;
     margin-bottom: 10px;
+    font-size: 1.3rem;
 }
 
 button {
     box-sizing: border-box;
-    width: 325px;
-    height: 40px;
+    height: 50px;
     background: #EB7B3C;
     border-radius: 6px;
     border: none;
@@ -125,6 +147,8 @@ button {
     color: #FFFFFF;
     cursor: pointer;
     margin-top: 5%;
+    width: 100%;
+    
 }
 </style>
 

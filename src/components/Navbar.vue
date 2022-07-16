@@ -1,10 +1,9 @@
 <template>
     <div id="nav">
-        <RouterLink to="/" class="text" v-show="urlHome">Início</RouterLink>
         <RouterLink to="/" id="logoUrl">
             <img src="../assets/logo.svg" :alt="logo" id="logo" />
         </RouterLink>
-        <RouterLink to="/login" @click="logout" class="text">Sair</RouterLink>
+        <RouterLink to="/login"  v-if="urlLogin" @click="logout" class="text">Sair</RouterLink>
     </div>
 </template>
 
@@ -14,22 +13,23 @@ export default {
     props: ["logo", "alt"],
     data() {
         return {
-            urlHome: true,
+            urlLogin: true,
         }
     },
     methods: {
-        getUrl() {
-            if (window.location.href === "http://localhost:3000/") {
-                this.urlHome = false;
+          getUrl() {
+            if (window.location.href === "http://localhost:3000/login") {
+                this.urlLogin = false;
             }
             else {
-                this.urlHome = true;
+                this.urlLogin = true;
             }
         },
         logout() {
             localStorage.removeItem('token');
             this.$router.push('/login');
         }
+
     },
     mounted() {
         this.getUrl();
@@ -41,14 +41,20 @@ export default {
 #nav {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
     width: 100%;
-    height: 150px;
+    height: 110px;
     left: 0px;
     top: 0px;
     background: #1D1D1B;
     position: fixed;
 
+}
+#logo{
+    width: 70%;
+    height: 100%;
+    margin-left: 15%;
+    margin-top: 10px;
 }
 
 .text {
