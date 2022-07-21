@@ -1,10 +1,10 @@
 <template>
-
+ <div class="mainContainer">
   <div id="todosEquipamentos">
 
     <div class="headerList">
       <filtro :equips="equips" @set-equips="setEquips" />
-      <RouterLink to="/cadastro"><button>Adicionar</button></RouterLink>
+      <RouterLink to="/cadastro"><button id="adicionar">Adicionar</button></RouterLink>
     </div>
 
     <div id="equipTable">
@@ -37,6 +37,7 @@
       @change-page="changePage" />
 
   </div>
+  </div>
 </template>
 
 <script>
@@ -58,6 +59,10 @@ export default {
       equips: null,
       visualizarEquip: false,
       EquipId: null,
+      activeEquips: null,
+      filtro: {
+        filtro: '',
+      },
 
       paginacao: {
         total: 0,
@@ -77,7 +82,9 @@ export default {
     async getAllEquips() {
 
       const res = await api.getAllEquipamentos();
+      console.log(res)
       const activeEquips = res.filter(equip => equip.enabled == true);
+      localStorage.setItem('equipamentos', JSON.stringify(res));
       this.paginacao.total = activeEquips.length;
       const pg = [];
       for (let i = 0; i < this.paginacao.total; i += this.paginacao.limit) {
@@ -85,22 +92,36 @@ export default {
       }
       this.pages = pg;
       this.equips = pg[0];
-      localStorage.setItem('equipamentos', JSON.stringify(res));
     },
-
+    async filtered() {
+      if (!this.filtro.filtro == '') {
+        console.log(this.filtro.filtro)
+        const filtered = this.activeEquips.filter(equip => equip.serial_number.includes(this.filtro.filtro));
+        this.paginacao.total = this.filtro.filtro.length;
+        const pg = [];
+        for (let i = 0; i < this.paginacao.total; i += this.paginacao.limit) {
+          pg.push(filtered.slice(i, i + this.paginacao.limit));
+        }
+        this.pages = pg;
+        this.equips = pg[0];
+      }
+    },
+    setEquips(equips) {
+      console.log(equips);
+      this.equips = equips;
+    },
     changePage(value) {
       this.equips = this.pages[value];
       this.paginacao.offset = value;
 
-    },
-
-    setEquips(equips) {
-      console.log(equips);
-      this.equips = equips;
     }
   },
-  mounted() {
+
+  created() {
     this.getAllEquips();
+  },
+  updated() {
+    this.filtered();
   }
 }
 </script>
@@ -118,7 +139,8 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 150px;
+  width: 65%;
+  margin: 1 auto;
 }
 
 #paginacao {
@@ -184,4 +206,14 @@ export default {
   cursor: pointer;
   background-color: #242424
 }
+#adicionar {
+  border: 1px solid #FFFFFF;
+  border-radius: 6px;
+  color: #FFFFFF;
+  cursor: pointer;
+  background-color: #242424;
+  font-size: 17px;
+}
+
+
 </style>

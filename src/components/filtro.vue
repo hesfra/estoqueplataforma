@@ -46,7 +46,6 @@ export default {
                 console.log(this.backupEquips);
                 return
             }
-
             const filtrados = this.equips.filter(equip => equip.serial_number.includes(this.filtro))
             this.$emit('setEquips', filtrados)
         },
@@ -61,5 +60,23 @@ export default {
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between;
+}
+#pesquisa select, #pesquisa input {
+    border: 1px solid #FFFFFF;
+  border-radius: 6px;
+  color: #FFFFFF;
+  cursor: pointer;
+  background-color: #242424;
+    padding: 3px;
+    margin-bottom: 5px;
+    font-size:1.1rem;
+}
+#pesquisa button {
+    background-color: #242424;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 6px;
+    padding: 3px;
+    font-size:18px;
 }
 </style>
