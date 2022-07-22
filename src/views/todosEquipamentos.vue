@@ -21,8 +21,8 @@
         <div class="equipTableRow" v-for="equip in equips" :key="equip.id">
           <div class="serialNumber">{{ equip.serial_number }}</div>
           <div class="name">{{ equip.device_name }}</div>
-          <div class="categoria">{{ equip.category }}</div>
-          <div class="status">{{ equip.status }}</div>
+          <div class="categoria" >{{ equip.id_category }}</div>
+          <div class="status">{{ equip.id_status }}</div>
           <button id="visualizar" @click="openModal(equip.id)">Visualizar</button>
         </div>
 
@@ -46,6 +46,7 @@ import filtro from '../components/filtro.vue'
 import modal from '../modal/modalGetEquip.vue';
 import paginacao from '../components/paginacao.vue';
 import { RouterLink } from 'vue-router';
+import transform from '../service/transform.js';
 export default {
   name: 'todosEquipamentos',
   components: {
@@ -59,7 +60,13 @@ export default {
       equips: null,
       visualizarEquip: false,
       EquipId: null,
-      activeEquips: null,
+      activeEquips: {
+        serial_number: null,
+        device_name: null,
+        device_description: null,
+        id_status: null,
+        id_category: null,
+      },
       filtro: {
         filtro: '',
       },
@@ -82,9 +89,11 @@ export default {
     async getAllEquips() {
 
       const res = await api.getAllEquipamentos();
-      console.log(res)
       const activeEquips = res.filter(equip => equip.enabled == true);
       localStorage.setItem('equipamentos', JSON.stringify(res));
+      console.log(activeEquips[1].id_status);
+      transform.transformarIdCategory(activeEquips);
+      transform.transformarIdStatus(activeEquips);
       this.paginacao.total = activeEquips.length;
       const pg = [];
       for (let i = 0; i < this.paginacao.total; i += this.paginacao.limit) {
@@ -92,6 +101,7 @@ export default {
       }
       this.pages = pg;
       this.equips = pg[0];
+      
     },
     async filtered() {
       if (!this.filtro.filtro == '') {
@@ -114,9 +124,8 @@ export default {
       this.equips = this.pages[value];
       this.paginacao.offset = value;
 
-    }
+    },
   },
-
   created() {
     this.getAllEquips();
   },
@@ -187,6 +196,7 @@ export default {
   width: 100%;
   padding: 12px;
   border-bottom: 1px solid #000000;
+  text-align: center;
 }
 
 #equipTableHeading .serialNumber,

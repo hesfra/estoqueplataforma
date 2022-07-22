@@ -126,9 +126,9 @@ export default {
 
             this.dispositivo = res.device_name;
             this.serialNumber = res.serial_number;
-            this.status = res.status;
-            this.categoria = res.category;
-            this.origem = res.origin;
+            this.status = res.id_status;
+            this.categoria = res.id_category;
+            this.origem = res.id_source;
             this.localizacao = res.id_location;
             this.dataEntrada = res.createdAt;
             this.detalhes = res.device_description;
@@ -140,9 +140,9 @@ export default {
         },
         async UpdateEquip() {
              const  data = JSON.stringify({ 
-                    status: this.status,
-                    category: this.categoria,
-                    origin: this.origem,
+                    id_status: this.status,
+                    id_category: this.categoria,
+                    id_source: this.origem,
                     id_location: this.localizacao,
                     createdAt: this.dataEntrada,
                     device_description: this.detalhes,

@@ -41,7 +41,7 @@
                     <option value="9">Peça-Hardware</option>
                 </select>
 
-                <button type="submit" value="Cadastrar" id="cadastrar" v-on:click="createEquip()">Cadastrar</button>
+                <button type="submit" value="Cadastrar" id="cadastrar" v-on:click="createEquip(), backtoHome()">Cadastrar</button>
 
             </div>
 
@@ -72,6 +72,7 @@
 <script>
 import api from '../service/api';
 import modal from "../modal/modalGetEquip.vue";
+import router from '../router';
 
 export default {
     name: "cadastrar",
@@ -80,8 +81,6 @@ export default {
     },
     data() {
         return {
-            // logo: "./src/assets/logo.svg",
-            //alt: "logo",
             serialNumber: null,
             nomeEquipamento: null,
             status: null,
@@ -106,6 +105,13 @@ export default {
 
             })
             const res = await api.createEquip(teste);
+            window.alert("Equipamento cadastrado com sucesso!");
+            
+        },
+        backtoHome() {
+            setTimeout(() => {
+                router.push('/');
+            }, 1000);
         }
     }
 }
