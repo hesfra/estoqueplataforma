@@ -12,7 +12,7 @@ const transformarIdStatus = async (activeEquips) => {
         activeEquips[i].id_status = switchIdStatus(activeEquips[i].id_status); }
     };
 
-const transformarIdSource = async () => {
+function switchIdSource (id_source){
     switch (id_source) {
         case 1:
             return "Doação";
@@ -65,7 +65,10 @@ function switchIdStatus(id_status){
 const transform = {
     transformarIdCategory,
     transformarIdStatus,
-    transformarIdSource,
+    switchIdCategory,
+    switchIdStatus,
+    switchIdSource,
+
 
 }
 export default transform

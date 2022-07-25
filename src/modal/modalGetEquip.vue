@@ -40,7 +40,8 @@
                                 :disabled="editar"></textarea>
                         </div>
                         <button v-if="editar == true" class="editBtn" v-on:click.prevent="Editar">Editar</button>
-                        <button v-if="editar == false" class="editBtn" v-on:click.prevent="UpdateEquip">Atualizar</button>
+                        <button v-if="editar == false" class="editBtn"
+                            v-on:click.prevent="UpdateEquip">Atualizar</button>
                         <button v-if="editar == false" v-on:click.prevent="inativarEquip">Excluir</button>
 
                     </form>
@@ -57,13 +58,11 @@
                         </div>
                         <div class="Inputs">
                             <label for="nomeContato">Nome do Contato</label>
-                            <input type="text" placeholder="nome do Contato" name="nomeContato"
-                                disabled />
+                            <input type="text" placeholder="nome do Contato" name="nomeContato" disabled />
                         </div>
                         <div class="Inputs">
                             <label for="telefone">Telefone</label>
-                            <input type="tel" placeholder="(21)######-#####" name="telefone" 
-                                disabled />
+                            <input type="tel" placeholder="(21)######-#####" name="telefone" disabled />
                         </div>
                         <div class="Inputs">
                             <label for="email">Email</label>
@@ -71,8 +70,7 @@
                         </div>
                         <div class="Inputs">
                             <label for="endereco">Endereço</label>
-                            <input type="text" placeholder="localizacao" name="endereco"
-                                disabled />
+                            <input type="text" placeholder="localizacao" name="endereco" disabled />
                         </div>
                     </form>
 
@@ -85,6 +83,7 @@
 
 <script>
 import api from '../service/api';
+import transform from '../service/transform';
 export default {
     name: 'modal',
     components: {
@@ -132,6 +131,10 @@ export default {
             this.localizacao = res.id_location;
             this.dataEntrada = res.createdAt;
             this.detalhes = res.device_description;
+            console.log(this.categoria)
+             this.categoria = transform.switchIdCategory(this.categoria);
+            this.status = transform.switchIdStatus(this.status);
+            this.origem = transform.switchIdSource(this.origem);
 
         },
         Editar() {
@@ -139,19 +142,19 @@ export default {
             console.log('clickou aqui')
         },
         async UpdateEquip() {
-             const  data = JSON.stringify({ 
-                    id_status: this.status,
-                    id_category: this.categoria,
-                    id_source: this.origem,
-                    id_location: this.localizacao,
-                    createdAt: this.dataEntrada,
-                    device_description: this.detalhes,
-                    updatedAt: new Date()
-             });
-                const res = await api.updateEquipamento(this.id, data);
-                console.log(res);
-                this.editar = true;
-             this.getEquip();
+            const data = JSON.stringify({
+                id_status: this.status,
+                id_category: this.categoria,
+                id_source: this.origem,
+                id_location: this.localizacao,
+                createdAt: this.dataEntrada,
+                device_description: this.detalhes,
+                updatedAt: new Date()
+            });
+            const res = await api.updateEquipamento(this.id, data);
+            console.log(res);
+            this.editar = true;
+            this.getEquip();
         },
         async inativarEquip() {
             const res = await api.inativarEquipamento(this.id);

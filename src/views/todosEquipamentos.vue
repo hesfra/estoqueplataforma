@@ -103,19 +103,6 @@ export default {
       this.equips = pg[0];
       
     },
-    async filtered() {
-      if (!this.filtro.filtro == '') {
-        console.log(this.filtro.filtro)
-        const filtered = this.activeEquips.filter(equip => equip.serial_number.includes(this.filtro.filtro));
-        this.paginacao.total = this.filtro.filtro.length;
-        const pg = [];
-        for (let i = 0; i < this.paginacao.total; i += this.paginacao.limit) {
-          pg.push(filtered.slice(i, i + this.paginacao.limit));
-        }
-        this.pages = pg;
-        this.equips = pg[0];
-      }
-    },
     setEquips(equips) {
       console.log(equips);
       this.equips = equips;
@@ -129,9 +116,6 @@ export default {
   created() {
     this.getAllEquips();
   },
-  updated() {
-    this.filtered();
-  }
 }
 </script>
 
@@ -182,14 +166,17 @@ export default {
 
   border-bottom: 1px solid #000000;
   font-weight: bold;
-  padding: 12px;
-  padding-right: 30px;
+  text-align: center;
+  padding: 10px 0;  
+  width: 100%;
+  
+  
 
 }
 
 #equipTableHeading div,
 .equipTableRow div {
-  width: 19%;
+  width: 20%;
 }
 
 .equipTableRow {
@@ -207,6 +194,7 @@ export default {
 #attLogo {
   width: 15px;
   height: 15px;
+  padding: 0 35px;
 }
 
 #visualizar {
